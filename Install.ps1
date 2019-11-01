@@ -19,4 +19,10 @@ if ($Exists) {
     }
 }
 
+$Result = @{
+    SourcePath = $SourcePath
+    ModulePath = $BaseModulePath
+}
+
+Write-Output $Result
 Copy-Item -Path $SourcePath -Recurse -Destination $BaseModulePath

@@ -27,7 +27,7 @@ With no further args given, the SQL instance will start up in 'Developer' mode i
 
 You can now export the volume to a tar archive.
 
-_Stop the container before you back up the volume, otherwise the result may not be workable._
+_Stop the container before you back up the volume, otherwise the result may be invalid._
 
 ```ps
 Copy-SqlVolumeToTar -Volume myvolume -Destination C:\Backup.tar

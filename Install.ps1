@@ -5,9 +5,6 @@ param (
     $Overwrite = $false
 )
 
-if ($env:IsMac)
-
-
 $SourcePath = [io.path]::Combine($PSScriptRoot, "MssqlDocker")
 $PathSeparator = [io.path]::PathSeparator
 $BaseModulePath = ($env:PSModulePath -split $PathSeparator)[0]

@@ -5,8 +5,12 @@ param (
     $Overwrite = $false
 )
 
+if ($env:IsMac)
+
+
 $SourcePath = [io.path]::Combine($PSScriptRoot, "MssqlDocker")
-$BaseModulePath = ($env:PSModulePath -split "[:;]")[0]
+$PathSeparator = [io.path]::PathSeparator
+$BaseModulePath = ($env:PSModulePath -split $PathSeparator)[0]
 $InstallPath = [io.path]::Combine($BaseModulePath, "MssqlDocker")
 $Exists = (([io.file]::Exists($InstallPath)) -or ([io.directory]::Exists($InstallPath)))
 

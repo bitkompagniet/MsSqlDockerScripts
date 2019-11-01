@@ -7,3 +7,4 @@ Push-Location $destination
 .\Install.ps1 -Overwrite
 
 Pop-Location
+Remove-Item $destination -Recurse -Force *>$null

@@ -6,9 +6,8 @@ param (
 )
 
 $SourcePath = [io.path]::Combine($PSScriptRoot, "MssqlDocker")
-$BaseModulePath = ($env:PSModulePath -split ";")[0]
+$BaseModulePath = ($env:PSModulePath -split "[:;]")[0]
 $InstallPath = [io.path]::Combine($BaseModulePath, "MssqlDocker")
-
 $Exists = (([io.file]::Exists($InstallPath)) -or ([io.directory]::Exists($InstallPath)))
 
 if ($Exists) {

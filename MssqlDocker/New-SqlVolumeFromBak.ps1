@@ -16,11 +16,14 @@ function New-SqlVolumeFromBak {
     
         [Parameter(Mandatory=$true, Position=1)]
         [string] 
-        $Volume
+        $Volume,
+
+        [Parameter()]
+        [string]
+        $Password = "!paSSw0rd"
     )
     
     $ContainerName = [guid]::NewGuid().ToString()
-    $Password = "7cFgdr!5B7J(#X&"
     
     if (![System.IO.File]::Exists($BakFile)) {
         throw "File not found: $BakFile"
@@ -34,7 +37,7 @@ function New-SqlVolumeFromBak {
         throw "The volume '$Volume' already exists. This will only restore into a new volume."
     }
     
-    docker run --name $ContainerName -e ACCEPT_EULA='Y' -e SA_PASSWORD="$Password" -e MSSQL_PID='Developer' -p 1433:1433 -v ${Volume}:/var/opt/mssql -d mcr.microsoft.com/mssql/server:2017-latest-ubuntu >$null
+    docker run --name $ContainerName -e ACCEPT_EULA='Y' -e SA_PASSWORD="$Password" -e MSSQL_PID='Developer' -v ${Volume}:/var/opt/mssql -d mcr.microsoft.com/mssql/server:2017-latest-ubuntu >$null
     
     if (!$?) {
         throw "Something went wrong when trying to start the container."
@@ -78,6 +81,7 @@ function New-SqlVolumeFromBak {
     $FullSql = "RESTORE DATABASE $DbName FROM DISK = '$InContainerPath' WITH KEEP_REPLICATION, " + $joined
     
     $Result.Add('SQL', $FullSql)
+    $Result.Add('Password', $Password)
     
     docker exec -it ${ContainerName} /opt/mssql-tools/bin/sqlcmd `
       -S localhost -U SA -P "$Password" `

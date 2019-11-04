@@ -45,7 +45,6 @@ function New-SqlDockerContainer {
 
     $Result = [ordered]@{
         Container = $DockerContainerName
-        SqlPassword = $SqlPassword
         Port = $Port
         Pid = $Pid
     }
@@ -58,8 +57,17 @@ function New-SqlDockerContainer {
     $VolumeString = ""
 
     if ($VolumeDefined) {
+
+        $PasswordExplicitlySet = $PSBoundParameters.ContainsKey('SqlPassword')
+
+        if ($PasswordExplicitlySet) {
+            throw "Password cannot be set on an existing volume. It was set on creation and cannot be reset."
+        }
+
         $VolumeString = "-v`"${Volume}:/var/opt/mssql`""
         $Result.Add('Volume', $Volume)
+    } else {
+        $Result.Add('SqlPassword', $SqlPassword)
     }
 
     docker rm -f $DockerContainerName *>$null

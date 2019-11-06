@@ -59,9 +59,14 @@ function New-SqlDockerContainer {
     if ($VolumeDefined) {
 
         $PasswordExplicitlySet = $PSBoundParameters.ContainsKey('SqlPassword')
+        $VolumeExists = (VolumeExists $Volume)
 
-        if ($PasswordExplicitlySet) {
-            throw "Password cannot be set on an existing volume. It was set on creation and cannot be reset."
+        if ($PasswordExplicitlySet -and $VolumeExists) {
+            throw "Password can only be set on a new volume. The volume '$Volume' already exists."
+        } 
+        
+        if (-not $VolumeExists) {
+            $Result.Add('SqlPassword', $SqlPassword)
         }
 
         $VolumeString = "-v`"${Volume}:/var/opt/mssql`""

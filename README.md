@@ -39,7 +39,6 @@ This process can be reversed.
 New-SqlVolumeFromTar -Volume myvolume2 -TarFile C:\Backup.tar
 ```
 
-
 ## Installation
 
 To just immediately install this plugin without further ado, run:
@@ -50,7 +49,9 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.We
 
 If you didn't see any errors, the module is now placed in your default module folder. Open a new shell to make the changes take effect.
 
-Clone this repository, and from the root of the project folder, run:
+### Install from local clone
+
+Alternatively, you can install the module from the project directory. From the root of the project folder, run:
 
 ```ps
 .\Install.ps1

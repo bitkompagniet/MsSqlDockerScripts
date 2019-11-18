@@ -76,7 +76,7 @@ function New-SqlDockerContainer {
     }
 
     docker rm -f $DockerContainerName *>$null
-    docker run --name $DockerContainerName -e ACCEPT_EULA='Y' -e SA_PASSWORD="$SqlPassword" -e MSSQL_PID="$Pid" -p ${Port}:1433 $VolumeString -d mcr.microsoft.com/mssql/server:2017-latest-ubuntu >$null
+    docker run --name $DockerContainerName -e ACCEPT_EULA='Y' -e SA_PASSWORD="$SqlPassword" -e MSSQL_PID="$Pid" -p ${Port}:1433 $VolumeString -d mcr.microsoft.com/mssql/server:latest >$null
 
     if (!$?) {
         throw "Failure to create docker container."

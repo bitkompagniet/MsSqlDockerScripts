@@ -37,7 +37,7 @@ function New-SqlVolumeFromBak {
         throw "The volume '$Volume' already exists. This will only restore into a new volume."
     }
     
-    docker run --name $ContainerName -e ACCEPT_EULA='Y' -e SA_PASSWORD="$Password" -e MSSQL_PID='Developer' -v ${Volume}:/var/opt/mssql -d mcr.microsoft.com/mssql/server:2017-latest-ubuntu >$null
+    docker run --name $ContainerName -e ACCEPT_EULA='Y' -e SA_PASSWORD="$Password" -e MSSQL_PID='Developer' -v ${Volume}:/var/opt/mssql -d mcr.microsoft.com/mssql/server:latest >$null
     
     if (!$?) {
         throw "Something went wrong when trying to start the container."
